@@ -1,0 +1,1 @@
+# vitalis_Qt_project
