@@ -33,3 +33,9 @@ Il permet de gérer les médecins, les patients, les médicaments et l’histori
 ```bash
 git clone https://github.com/Mahamat242/vitalis_Qt_project.git
 cd vitalis_Qt_project
+```
+### 2. lancer docker desktop si sur windows
+### 3. lancer les services docker
+
+```bash
+docker compose up -d
