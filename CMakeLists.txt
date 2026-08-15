@@ -10,6 +10,9 @@ qt_add_executable(vitalis
     main.cpp
     mainwindow.cpp
     mainwindow.h
+    dbmanager.h
+    login.h
+    login.cpp
 )
 
 target_link_libraries(vitalis
