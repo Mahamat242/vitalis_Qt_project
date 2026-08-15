@@ -1,0 +1,26 @@
+# dossier de compilation QT et CMake
+build/
+build-*/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake 
+Makefile*
+*.user
+*.pro.user*
+.qtcreator/
+
+#fichier et bibliothèques
+*.o
+*.a
+*.so
+
+#executable binaire généré
+vitalis
+
+# données locales pour docker
+mysql_data
+
+# fichier d'éditeur et du système
+.vscode/
+.DS_Store
+Thumbs.db
