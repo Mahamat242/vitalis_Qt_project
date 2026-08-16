@@ -14,7 +14,7 @@ class databaseManager
             db.setHostName("127.0.0.1");
             db.setPort(3306);
             db.setDatabaseName("vitalis_db");
-            db.setUserName("vitalise_user");
+            db.setUserName("vitalis_user");
             db.setPassword("vitalis_pwd");
 
             if(!db.open())
@@ -23,9 +23,9 @@ class databaseManager
                 return false;
             }
 
-            qInfo() << "connexion réussi à mySql";
+            qInfo() << "connexion réussie à mySql";
             return true;
-        }
-}
+        };
+};
 
 #endif // DBMANAGER_H

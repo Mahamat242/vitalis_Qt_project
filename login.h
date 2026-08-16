@@ -10,7 +10,7 @@
 #include <QSqlQuery>
 #include <QMessageBox>
 
-class login : QDialog
+class login : public QDialog
 {
     Q_OBJECT
 
@@ -24,6 +24,6 @@ class login : QDialog
         QLineEdit *pwdEdit;
         QPushButton *loginButton;
         QPushButton *cancelButton;
-}
+};
 
 #endif // LOGIN_H

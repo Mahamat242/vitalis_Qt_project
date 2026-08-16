@@ -1,6 +1,19 @@
 create DATABASE IF NOT EXISTS vitalis_db;
 use vitalis_db;
 
+-- table utilisateur pour la page d'authentification
+create table if not exists Utilisateur(
+    id int auto_increment primary key,
+    login varchar(45) unique not null,
+    password varchar(255) not null
+);
+
+insert into Utilisateur (login, password) values ('mahamat', 'mahamat@admin')
+on duplicate key update login=login;
+
+insert into Utilisateur (login, password) values ('diariou', 'diariou@admin')
+on duplicate key update login=login;
+
 -- table médecin
 create table if not exists Medecin(
     matricule int auto_increment primary key,
