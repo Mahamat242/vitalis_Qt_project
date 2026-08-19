@@ -15,6 +15,8 @@ qt_add_executable(vitalis
     login.cpp
     consultationForm.h
     consultationForm.cpp
+    historiquePatientForm.h
+    historiquePatientForm.cpp
 )
 
 target_link_libraries(vitalis
