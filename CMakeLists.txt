@@ -13,6 +13,8 @@ qt_add_executable(vitalis
     dbmanager.h
     login.h
     login.cpp
+    consultationForm.h
+    consultationForm.cpp
 )
 
 target_link_libraries(vitalis
