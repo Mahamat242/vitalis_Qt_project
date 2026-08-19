@@ -8,24 +8,31 @@
 #include <QHBoxLayout>
 #include <QWidget>
 #include "consultationform.h"
-
+#include <QLabel>
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
-public:
-    explicit MainWindow(QWidget *parent = nullptr);
-    ~MainWindow() override = default;
+    public:
+        explicit MainWindow(QWidget *parent = nullptr);
+        ~MainWindow() override = default;
 
-private slots:
-    void showConsultationPage();
+    private slots:
+        void showConsultationPage();
 
-private:
-    QStackedWidget *stackedWidget;
-    ConsultationForm *consultationPage;
+    private:
+        QStackedWidget *stackedWidget;
+        consultationForm *consultationPage;
+        QWidget *dashboardPage;
+        QPushButton *btnDashboard;
+        QPushButton *btnPatient;
+        QPushButton *btnMedecin;
+        QPushButton *btnMedicament;
+        QPushButton *btnConsultation;
+        QPushButton *btnHistorique;
 
-    QPushButton *btnConsultation;
+        void showDashboard();
 };
 
 #endif // MAINWINDOW_H
