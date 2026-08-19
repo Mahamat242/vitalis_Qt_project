@@ -16,19 +16,19 @@
 class HistoriquePatientsForm : public QWidget {
   Q_OBJECT
 
-public:
-  explicit HistoriquePatientsForm(QWidget *parent = nullptr);
-  void refreshData();
+    public:
+      explicit HistoriquePatientsForm(QWidget *parent = nullptr);
+      void refreshData();
 
-private slots:
-  void filterHistory(const QString &text);
+    private slots:
+      void filterHistory(const QString &text);
 
-private:
-  QLineEdit *searchLineEdit;
-  QTableWidget *historyTable;
+    private:
+      QLineEdit *searchLineEdit;
+      QTableWidget *historyTable;
 
-  void setupUi();
-  void loadHistory(const QString &filter = "");
+      void setupUi();
+      void loadHistory(const QString &filter = "");
 };
 
 #endif // HISTORIQUEPATIENTSFORM_H

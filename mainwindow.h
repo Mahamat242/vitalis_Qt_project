@@ -11,7 +11,7 @@
 
 
 #include "consultationform.h"
-#include "historiquepatientsform.h"
+#include "historiquePatientForm.h"
 
 class MainWindow : public QMainWindow {
   Q_OBJECT
