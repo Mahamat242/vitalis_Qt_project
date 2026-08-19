@@ -2,6 +2,54 @@
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-{}
+{
+    //w idget central et layout principal
+    QWidget *centralWidget = new QWidget(this);
+    QHBoxLayout *mainLayout = new QHBoxLayout(centralWidget);
+    setCentralWidget(centralWidget);
 
-MainWindow::~MainWindow() = default;
+    QVBoxLayout *navMenuLayout = new QVBoxLayout();
+
+    QLabel *appTitle = new QLabel("<b>VITALIS</b>", this);
+    appTitle->setStyleSheet("font-size: 18px; margin-bottom: 15px; color: #2C3E50;");
+    navMenuLayout->addWidget(appTitle);
+
+    btnDashboard = new QPushButton("Tableau de bord", this);
+    btnPatient = new QPushButton("Nouveau Patient", this);
+    btnMedecin = new QPushButton("Nouveau Médecin", this);
+    btnMedicament = new QPushButton("Nouveau Médicament", this);
+    btnConsultation = new QPushButton("Nouvelle Consultation", this);
+    btnHistorique = new QPushButton("Historique Patients", this);
+
+    navMenuLayout->addWidget(btnDashboard);
+    navMenuLayout->addWidget(btnPatient);
+    navMenuLayout->addWidget(btnMedecin);
+    navMenuLayout->addWidget(btnMedicament);
+    navMenuLayout->addWidget(btnConsultation);
+    navMenuLayout->addWidget(btnHistorique);
+    navMenuLayout->addStretch();
+
+    // zone d'affichage dynamique
+    stackedWidget = new QStackedWidget(this);
+
+    dashboardPage = new QWidget(this);
+    QVBoxLayout *dashLayout = new QVBoxLayout(dashboardPage);
+    QLabel *welcomeLabel = new QLabel("<h1>Bienvenue chez Vitalis</h1><p>Sélectionnez une option dans le menu latéral.</p>", dashboardPage);
+    welcomeLabel->setAlignment(Qt::AlignCenter);
+    dashLayout->addWidget(welcomeLabel);
+
+    stackedWidget->addWidget(dashboardPage);
+
+    mainLayout->addLayout(navMenuLayout, 1);
+    mainLayout->addWidget(stackedWidget, 4);
+
+    connect(btnDashboard, &QPushButton::clicked, this, &MainWindow::showDashboard);
+
+    setWindowTitle("Vitalis - Gestion médicale");
+    resize(950, 650);
+}
+
+void MainWindow::showDashboard()
+{
+    stackedWidget->setCurrentWidget(dashboardPage);
+}
