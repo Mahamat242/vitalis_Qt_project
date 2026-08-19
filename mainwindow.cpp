@@ -40,10 +40,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
   dashLayout->addWidget(welcomeLabel);
 
   consultationPage = new consultationForm(this);
+  historiquePage = new HistoriquePatientsForm(this);
 
   // ajout des pages dans la pile
   stackedWidget->addWidget(dashboardPage);
   stackedWidget->addWidget(consultationPage);
+  stackedWidget->addWidget(historiquePage);
 
   mainLayout->addLayout(navMenuLayout, 1);
   mainLayout->addWidget(stackedWidget, 4);
@@ -52,6 +54,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
           &MainWindow::showConsultationPage);
   connect(btnDashboard, &QPushButton::clicked, this,
           &MainWindow::showDashboard);
+  connect(btnHistorique, &QPushButton::clicked, this,
+          &MainWindow::showHistoriquePage);
 
   setWindowTitle("Vitalis - Gestion médicale");
   resize(900, 600);
