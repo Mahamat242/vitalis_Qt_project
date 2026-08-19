@@ -69,3 +69,8 @@ void MainWindow::showConsultationPage() {
 void MainWindow::showDashboard() {
   stackedWidget->setCurrentWidget(dashboardPage);
 }
+
+void MainWindow::showHistoriquePage() {
+  stackedWidget->setCurrentWidget(historiquePage);
+  historiquePage->refreshData();
+}
