@@ -9,6 +9,7 @@
 #include <QHBoxLayout>
 #include <QSqlQuery>
 #include <QMessageBox>
+#include <QSqlError>
 
 class login : public QDialog
 {

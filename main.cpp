@@ -15,8 +15,8 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    login log;
-    if(log.exec() == QDialog::Accepted)
+    login logForm;
+    if(logForm.exec() == QDialog::Accepted)
     {
         // si l'authentification est acceptée, alors afficher la page principale
         MainWindow w;
