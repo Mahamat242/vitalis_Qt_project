@@ -10,6 +10,8 @@ qt_add_executable(vitalis
     main.cpp
     mainwindow.cpp
     mainwindow.h
+    ajoutMedecin.h
+    ajoutMedecin.cpp
 )
 
 target_link_libraries(vitalis
