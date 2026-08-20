@@ -4,7 +4,9 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
     formMedecin= new FormMedecin(this);
-    setCentralWidget(formMedecin);
+    formPatient= new FormPatient(this);
+
+    setCentralWidget(formPatient);
 }
 
 MainWindow::~MainWindow() = default;

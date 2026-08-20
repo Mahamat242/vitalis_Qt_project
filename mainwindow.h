@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "ajoutMedecin.h"
+#include "ajoutPatient.h"
 
 class MainWindow : public QMainWindow
 {
@@ -14,5 +15,6 @@ public:
 
 private :
     FormMedecin *formMedecin;
+    FormPatient *formPatient;
 };
 #endif // MAINWINDOW_H
