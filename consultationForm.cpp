@@ -34,6 +34,7 @@ consultationForm::consultationForm(QWidget *parent) : QWidget(parent) {
   nbJours->setValue(7);
 
   addMedocButton = new QPushButton("Ajouter à l'ordonnance", this);
+  addMedocButton->setProperty("class", "btnPrimary");
 
   medocLayout->addWidget(new QLabel("Médicament :", this));
   medocLayout->addWidget(medicament, 1);
@@ -56,11 +57,13 @@ consultationForm::consultationForm(QWidget *parent) : QWidget(parent) {
   // boutton pour retirer un medoc du tableau
   QPushButton *removeMedocButton =
       new QPushButton("Retirer le médicament sélectionné");
+  removeMedocButton->setProperty("class", "btnDanger");
   mainLayout->addWidget(removeMedocButton);
 
   // button enregistrer
   save = new QPushButton("valider et enregistrer la consultation", this);
   save->setStyleSheet("font-weight : bold; padding: 8px");
+  save->setProperty("class", "btnSuccess");
   mainLayout->addWidget(save);
 
   // connexions
