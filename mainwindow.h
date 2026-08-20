@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include "ajoutMedecin.h"
 #include "ajoutPatient.h"
-
+#include "ajoutMedicament.h"
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -16,5 +16,6 @@ public:
 private :
     FormMedecin *formMedecin;
     FormPatient *formPatient;
+    FormMedicament *formMedicament;
 };
 #endif // MAINWINDOW_H
