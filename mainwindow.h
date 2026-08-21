@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QButtonGroup>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QMainWindow>
@@ -8,35 +9,33 @@
 #include <QStackedWidget>
 #include <QVBoxLayout>
 #include <QWidget>
-
-
 #include "consultationform.h"
-#include "historiquepatientsform.h"
+#include "historiquePatientForm.h"
 
-class MainWindow : public QMainWindow {
-  Q_OBJECT
+class MainWindow : public QMainWindow
+{
+    Q_OBJECT
+    public:
+        explicit MainWindow(QWidget *parent = nullptr);
+        ~MainWindow() override = default;
 
-public:
-  explicit MainWindow(QWidget *parent = nullptr);
-  ~MainWindow() override = default;
+    private slots:
+        void showConsultationPage();
+        void showHistoriquePage();
 
-private slots:
-  void showConsultationPage();
-  void showHistoriquePage();
+    private:
+        QStackedWidget *stackedWidget;
+        consultationForm *consultationPage;
+        HistoriquePatientsForm *historiquePage;
+        QWidget *dashboardPage;
+        QPushButton *btnDashboard;
+        QPushButton *btnPatient;
+        QPushButton *btnMedecin;
+        QPushButton *btnMedicament;
+        QPushButton *btnConsultation;
+        QPushButton *btnHistorique;
+        QButtonGroup *navGroup;
 
-private:
-  QStackedWidget *stackedWidget;
-  consultationForm *consultationPage;
-  HistoriquePatientsForm *historiquePage;
-  QWidget *dashboardPage;
-  QPushButton *btnDashboard;
-  QPushButton *btnPatient;
-  QPushButton *btnMedecin;
-  QPushButton *btnMedicament;
-  QPushButton *btnConsultation;
-  QPushButton *btnHistorique;
-
-  void showDashboard();
+        void showDashboard();
 };
-
 #endif // MAINWINDOW_H

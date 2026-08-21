@@ -1,4 +1,4 @@
-#include "historiquepatientsform.h"
+#include "historiquePatientForm.h"
 
 HistoriquePatientsForm::HistoriquePatientsForm(QWidget *parent)
     : QWidget(parent) {
