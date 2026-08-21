@@ -45,7 +45,7 @@ void FormPatient::savePatient()
     }
 
     QSqlQuery query;
-    query.prepare("INSERT INTO Patient (Num_ss,Nom) VALUES (:num, :nom)");
+    query.prepare("INSERT INTO Patient (num_ss, nom) VALUES (:num, :nom)");
     query.bindValue(":num", numPatient);
     query.bindValue(":nom", nom);
 

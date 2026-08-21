@@ -16,7 +16,7 @@ void HistoriquePatientsForm::setupUi() {
 
   // Zone de recherche
   QHBoxLayout *searchLayout = new QHBoxLayout();
-  QLabel *searchLabel = new QLabel("Rechercher (Nom ou N° SS) :", this);
+  QLabel *searchLabel = new QLabel("Rechercher (Nom patient ou N° SS) :", this);
   searchLineEdit = new QLineEdit(this);
   searchLineEdit->setPlaceholderText(
       "Tapez un nom ou un numéro de sécurité sociale...");
@@ -25,11 +25,10 @@ void HistoriquePatientsForm::setupUi() {
   searchLayout->addWidget(searchLineEdit);
   mainLayout->addLayout(searchLayout);
 
-  // Tableau des résultats
+  // Tableau des résultats — colonnes adaptées au vrai schéma
   historyTable = new QTableWidget(this);
-  historyTable->setColumnCount(6);
-  QStringList headers = {"Date",    "Patient",    "N° SS",
-                         "Médecin", "Diagnostic", "Médicament Prescrit"};
+  historyTable->setColumnCount(5);
+  QStringList headers = {"Date", "Patient (N° SS)", "Médecin", "N° Consultation", "Médicaments prescrits"};
   historyTable->setHorizontalHeaderLabels(headers);
 
   // Configuration de l'affichage de la table
@@ -48,26 +47,38 @@ void HistoriquePatientsForm::setupUi() {
 void HistoriquePatientsForm::loadHistory(const QString &filter) {
   historyTable->setRowCount(0);
 
-  QSqlQuery query;
-  QString sql = "SELECT c.date_consultation, "
-                "p.nom || ' ' || p.prenom AS patient_nom, "
-                "p.num_ss, "
-                "m.nom || ' ' || m.prenom AS medecin_nom, "
-                "c.diagnostic, "
-                "med.libelle "
-                "FROM Consultation c "
-                "JOIN Patient p ON c.id_patient = p.id "
-                "JOIN Medecin m ON c.id_medecin = m.id "
-                "LEFT JOIN Prescription pr ON c.id = pr.id_consultation "
-                "LEFT JOIN Medicament med ON pr.id_medicament = med.id ";
+  /*
+   * Requête conforme au schéma réel :
+   *   Patient(num_ss, nom)
+   *   Medecin(matricule, nom)
+   *   Consultation(numero, date, medecin_matricule, patient_num_ss)
+   *   Prescrit(medicament_code, consultation_num, nombre_jours)
+   *   Medicament(code, libelle)
+   *
+   * On agrège les médicaments d'une consultation avec GROUP_CONCAT.
+   */
+  QString sql =
+      "SELECT "
+      "  c.date, "
+      "  CONCAT(p.nom, ' (N°SS: ', p.num_ss, ')') AS patient, "
+      "  CONCAT('Dr. ', m.nom, ' (Mat: ', m.matricule, ')') AS medecin, "
+      "  c.numero, "
+      "  IFNULL(GROUP_CONCAT(CONCAT(med.libelle, ' — ', pr.nombre_jours, ' j') "
+      "         ORDER BY med.libelle SEPARATOR ' | '), '-') AS medicaments "
+      "FROM Consultation c "
+      "JOIN Patient p ON c.patient_num_ss = p.num_ss "
+      "JOIN Medecin m ON c.medecin_matricule = m.matricule "
+      "LEFT JOIN Prescrit pr ON c.numero = pr.consultation_num "
+      "LEFT JOIN Medicament med ON pr.medicament_code = med.code ";
 
   if (!filter.isEmpty()) {
-    sql += "WHERE p.nom LIKE :filter OR p.prenom LIKE :filter OR CAST(p.num_ss "
-           "AS TEXT) LIKE :filter ";
+    sql += "WHERE p.nom LIKE :filter OR CAST(p.num_ss AS CHAR) LIKE :filter ";
   }
 
-  sql += "ORDER BY c.date_consultation DESC";
+  sql += "GROUP BY c.numero, c.date, p.nom, p.num_ss, m.nom, m.matricule "
+         "ORDER BY c.date DESC, c.numero DESC";
 
+  QSqlQuery query;
   query.prepare(sql);
   if (!filter.isEmpty()) {
     query.bindValue(":filter", "%" + filter + "%");
@@ -77,23 +88,11 @@ void HistoriquePatientsForm::loadHistory(const QString &filter) {
     int row = 0;
     while (query.next()) {
       historyTable->insertRow(row);
-
-      historyTable->setItem(row, 0,
-                            new QTableWidgetItem(query.value(0).toString()));
-      historyTable->setItem(row, 1,
-                            new QTableWidgetItem(query.value(1).toString()));
-      historyTable->setItem(row, 2,
-                            new QTableWidgetItem(query.value(2).toString()));
-      historyTable->setItem(row, 3,
-                            new QTableWidgetItem(query.value(3).toString()));
-      historyTable->setItem(row, 4,
-                            new QTableWidgetItem(query.value(4).toString()));
-      historyTable->setItem(
-          row, 5,
-          new QTableWidgetItem(query.value(5).toString().isEmpty()
-                                   ? "-"
-                                   : query.value(5).toString()));
-
+      historyTable->setItem(row, 0, new QTableWidgetItem(query.value(0).toString())); // date
+      historyTable->setItem(row, 1, new QTableWidgetItem(query.value(1).toString())); // patient
+      historyTable->setItem(row, 2, new QTableWidgetItem(query.value(2).toString())); // médecin
+      historyTable->setItem(row, 3, new QTableWidgetItem(query.value(3).toString())); // n° consultation
+      historyTable->setItem(row, 4, new QTableWidgetItem(query.value(4).toString())); // médicaments
       row++;
     }
   } else {
@@ -109,4 +108,4 @@ void HistoriquePatientsForm::filterHistory(const QString &text) {
 void HistoriquePatientsForm::refreshData() {
   searchLineEdit->clear();
   loadHistory();
-}
+}

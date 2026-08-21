@@ -11,6 +11,9 @@
 #include <QWidget>
 #include "consultationForm.h"
 #include "historiquePatientForm.h"
+#include "ajoutMedecin.h"
+#include "ajoutPatient.h"
+#include "ajoutMedicament.h"
 
 class MainWindow : public QMainWindow
 {
@@ -22,11 +25,17 @@ class MainWindow : public QMainWindow
     private slots:
         void showConsultationPage();
         void showHistoriquePage();
+        void showMedecinPage();
+        void showPatientPage();
+        void showMedicamentPage();
 
     private:
         QStackedWidget *stackedWidget;
         consultationForm *consultationPage;
         HistoriquePatientsForm *historiquePage;
+        FormMedecin   *medecinPage;
+        FormPatient   *patientPage;
+        FormMedicament *medicamentPage;
         QWidget *dashboardPage;
         QPushButton *btnDashboard;
         QPushButton *btnPatient;

@@ -23,7 +23,9 @@ private slots:
 private:
     QLineEdit *codeMedocEdit;
     QLineEdit *libelleEdit;
+    QLineEdit *indicationsEdit;
+    QLineEdit *posologieEdit;
     QPushButton *saveButton;
 };
 
-#endif // AJOUTMEDICAMENT_H
+#endif // AJOUTMEDICAMENT_H

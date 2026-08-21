@@ -89,12 +89,14 @@ void consultationForm::loadMedecin() {
   QSqlQuery query;
   query.prepare("select matricule, nom from Medecin order by nom");
 
-  while (query.next()) {
-    int matricule = query.value(0).toInt();
-    QString nom = query.value(1).toString();
-    // on stocke le matricule comme QVariant
-    medecin->addItem(QString("Dr. %1 (Matricule : %2)").arg(nom).arg(matricule),
-                     matricule);
+  if (query.exec()) {
+    while (query.next()) {
+      int matricule = query.value(0).toInt();
+      QString nom = query.value(1).toString();
+      // on stocke le matricule comme QVariant
+      medecin->addItem(QString("Dr. %1 (Matricule : %2)").arg(nom).arg(matricule),
+                       matricule);
+    }
   }
 }
 
@@ -170,7 +172,7 @@ void consultationForm::saveConsultation() {
 
   int matMedecin = medecin->currentData().toInt();
   int num_ssPatient = patient->currentData().toInt();
-  QString date = dateEdit->date().toString("dd-MM-yyyy");
+  QString date = dateEdit->date().toString("yyyy-MM-dd"); // Format MySQL
 
   QSqlDatabase db = QSqlDatabase::database();
   db.transaction();

@@ -19,12 +19,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     navMenuLayout->addWidget(appTitle);
 
     // création des boutons avec la classe navBtn
-    btnDashboard = new QPushButton(" Tableau de bord", this);
-    btnPatient = new QPushButton(" Nouveau Patient", this);
-    btnMedecin = new QPushButton(" Nouveau Médecin", this);
-    btnMedicament = new QPushButton(" Nouveau Médicament", this);
-    btnConsultation = new QPushButton(" Nouvelle Consultation", this);
-    btnHistorique = new QPushButton(" Historique Patients", this);
+    btnDashboard   = new QPushButton(" Tableau de bord", this);
+    btnPatient     = new QPushButton(" Nouveau Patient", this);
+    btnMedecin     = new QPushButton(" Nouveau Médecin", this);
+    btnMedicament  = new QPushButton(" Nouveau Médicament", this);
+    btnConsultation= new QPushButton(" Nouvelle Consultation", this);
+    btnHistorique  = new QPushButton(" Historique Patients", this);
 
     QList<QPushButton *> navBtns = {btnDashboard, btnPatient, btnMedecin, btnMedicament, btnConsultation, btnHistorique};
 
@@ -48,6 +48,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     stackedWidget = new QStackedWidget(this);
     stackedWidget->setStyleSheet("padding: 20px;");
 
+    // page d'accueil
     dashboardPage = new QWidget(this);
     QVBoxLayout *dashLayout = new QVBoxLayout(dashboardPage);
     QLabel *welcomeLabel = new QLabel("<h1 style='color:#1E293B;'>Bienvenue chez Vitalis</h1><p "
@@ -58,25 +59,54 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     welcomeLabel->setAlignment(Qt::AlignCenter);
     dashLayout->addWidget(welcomeLabel);
 
+    // instanciation des pages fonctionnelles
+    medecinPage    = new FormMedecin(this);
+    patientPage    = new FormPatient(this);
+    medicamentPage = new FormMedicament(this);
     consultationPage = new consultationForm(this);
-    historiquePage = new HistoriquePatientsForm(this);
+    historiquePage   = new HistoriquePatientsForm(this);
 
-    stackedWidget->addWidget(dashboardPage);
-    stackedWidget->addWidget(consultationPage);
-    stackedWidget->addWidget(historiquePage);
+    // ajout de toutes les pages au stackedWidget
+    stackedWidget->addWidget(dashboardPage);    // index 0
+    stackedWidget->addWidget(medecinPage);      // index 1
+    stackedWidget->addWidget(patientPage);      // index 2
+    stackedWidget->addWidget(medicamentPage);   // index 3
+    stackedWidget->addWidget(consultationPage); // index 4
+    stackedWidget->addWidget(historiquePage);   // index 5
 
     mainLayout->addWidget(navContainer, 1);
     mainLayout->addWidget(stackedWidget, 4);
 
-    connect(btnDashboard, &QPushButton::clicked, this,
-            &MainWindow::showDashboard);
-    connect(btnConsultation, &QPushButton::clicked, this,
-            &MainWindow::showConsultationPage);
-    connect(btnHistorique, &QPushButton::clicked, this,
-            &MainWindow::showHistoriquePage);
+    // connexions des boutons de navigation
+    connect(btnDashboard,    &QPushButton::clicked, this, &MainWindow::showDashboard);
+    connect(btnMedecin,      &QPushButton::clicked, this, &MainWindow::showMedecinPage);
+    connect(btnPatient,      &QPushButton::clicked, this, &MainWindow::showPatientPage);
+    connect(btnMedicament,   &QPushButton::clicked, this, &MainWindow::showMedicamentPage);
+    connect(btnConsultation, &QPushButton::clicked, this, &MainWindow::showConsultationPage);
+    connect(btnHistorique,   &QPushButton::clicked, this, &MainWindow::showHistoriquePage);
 
     setWindowTitle("Vitalis - Gestion Médicale");
     resize(1100, 700);
+}
+
+void MainWindow::showDashboard()
+{
+    stackedWidget->setCurrentWidget(dashboardPage);
+}
+
+void MainWindow::showMedecinPage()
+{
+    stackedWidget->setCurrentWidget(medecinPage);
+}
+
+void MainWindow::showPatientPage()
+{
+    stackedWidget->setCurrentWidget(patientPage);
+}
+
+void MainWindow::showMedicamentPage()
+{
+    stackedWidget->setCurrentWidget(medicamentPage);
 }
 
 void MainWindow::showConsultationPage()
@@ -85,13 +115,8 @@ void MainWindow::showConsultationPage()
     consultationPage->refreshData();
 }
 
-void MainWindow::showDashboard()
-{
-    stackedWidget->setCurrentWidget(dashboardPage);
-}
-
 void MainWindow::showHistoriquePage()
 {
     stackedWidget->setCurrentWidget(historiquePage);
     historiquePage->refreshData();
-}
+}
