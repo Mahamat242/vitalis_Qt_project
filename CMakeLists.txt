@@ -10,12 +10,19 @@ qt_add_executable(vitalis
     main.cpp
     mainwindow.cpp
     mainwindow.h
+    dbmanager.h
+    login.h
+    login.cpp
     ajoutMedecin.h
     ajoutMedecin.cpp
-    ajoutPatient.cpp
     ajoutPatient.h
+    ajoutPatient.cpp
     ajoutMedicament.h
     ajoutMedicament.cpp
+    consultationForm.h
+    consultationForm.cpp
+    historiquePatientForm.h
+    historiquePatientForm.cpp
 )
 
 target_link_libraries(vitalis
