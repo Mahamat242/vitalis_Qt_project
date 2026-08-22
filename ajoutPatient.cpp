@@ -10,7 +10,8 @@ FormPatient::FormPatient(QWidget *parent): QWidget(parent)
     nomEdit = new QLineEdit(this);
     nomEdit->setPlaceholderText("Ex: Mahamat Haroun ");
 
-    saveButton = new QPushButton("Enregistrer le Patient", this);
+    saveButton = new QPushButton("Enregistrer le patient", this);
+    saveButton->setProperty("class", "btnPrimary");
 
     formLayout->addRow("N° Sécurité Sociale :",numPatientEdit);
     formLayout->addRow("Prénom et Nom du Patient",nomEdit);

@@ -9,7 +9,8 @@ FormMedecin::FormMedecin(QWidget *parent):QWidget(parent)
     nomEdit =new QLineEdit(this);
     nomEdit->setPlaceholderText("Ex:Dr. DIALLO");
 
-    saveButton =new QPushButton("Enregistrer",this);
+    saveButton =new QPushButton("Enregistrer le médecin",this);
+    saveButton->setProperty("class", "btnPrimary");
 
     formLayout->addRow("Matricule :",matriculeEdit);
     formLayout->addRow("Nom du médecin :",nomEdit);

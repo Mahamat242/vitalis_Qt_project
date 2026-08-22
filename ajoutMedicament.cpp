@@ -18,6 +18,7 @@ FormMedicament::FormMedicament(QWidget *parent)
     posologieEdit->setPlaceholderText("Ex: 1 comprimé toutes les 6h");
 
     saveButton = new QPushButton("Enregistrer le Médicament", this);
+    saveButton->setProperty("class", "btnPrimary");
 
     formLayout->addRow("Code Médicament :", codeMedocEdit);
     formLayout->addRow("Libellé :", libelleEdit);
@@ -64,4 +65,4 @@ void FormMedicament::saveMedicament()
     } else {
         QMessageBox::critical(this, "Erreur BDD", "Échec de l'enregistrement : " + query.lastError().text());
     }
-}
+}
