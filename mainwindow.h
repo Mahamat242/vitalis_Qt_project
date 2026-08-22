@@ -36,15 +36,11 @@ class MainWindow : public QMainWindow
         FormMedecin   *medecinPage;
         FormPatient   *patientPage;
         FormMedicament *medicamentPage;
-        QWidget *dashboardPage;
-        QPushButton *btnDashboard;
         QPushButton *btnPatient;
         QPushButton *btnMedecin;
         QPushButton *btnMedicament;
         QPushButton *btnConsultation;
         QPushButton *btnHistorique;
         QButtonGroup *navGroup;
-
-        void showDashboard();
 };
-#endif // MAINWINDOW_H
+#endif // MAINWINDOW_H

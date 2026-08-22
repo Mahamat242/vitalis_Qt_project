@@ -1,6 +1,7 @@
 #include "consultationForm.h"
 
-consultationForm::consultationForm(QWidget *parent) : QWidget(parent) {
+consultationForm::consultationForm(QWidget *parent) : QWidget(parent)
+{
   QVBoxLayout *mainLayout = new QVBoxLayout(this);
 
   QLabel *title = new QLabel("<h2>Enregistrer une consultation</h2>", this);
@@ -78,13 +79,15 @@ consultationForm::consultationForm(QWidget *parent) : QWidget(parent) {
   refreshData();
 }
 
-void consultationForm::refreshData() {
+void consultationForm::refreshData()
+{
   loadMedecin();
   loadPatient();
   loadMedicament();
 }
 
-void consultationForm::loadMedecin() {
+void consultationForm::loadMedecin()
+{
   medecin->clear();
   QSqlQuery query;
   query.prepare("select matricule, nom from Medecin order by nom");
@@ -100,7 +103,8 @@ void consultationForm::loadMedecin() {
   }
 }
 
-void consultationForm::loadPatient() {
+void consultationForm::loadPatient()
+{
   patient->clear();
   QSqlQuery query;
   query.prepare("select num_ss, nom from Patient order by nom");
@@ -114,7 +118,8 @@ void consultationForm::loadPatient() {
   }
 }
 
-void consultationForm::loadMedicament() {
+void consultationForm::loadMedicament()
+{
   medicament->clear();
   QSqlQuery query;
   query.prepare("select code, libelle from Medicament order by libelle");
@@ -128,9 +133,9 @@ void consultationForm::loadMedicament() {
   }
 }
 
-void consultationForm::addMedicamentToPrescription() {
-  if (medicament->currentIndex() == -1)
-    return;
+void consultationForm::addMedicamentToPrescription()
+{
+  if (medicament->currentIndex() == -1) return;
 
   QString libelle = medicament->currentText();
   QString code = medicament->currentData().toString();
@@ -185,11 +190,10 @@ void consultationForm::saveConsultation() {
   query.bindValue(":medecin", matMedecin);
   query.bindValue(":patient", num_ssPatient);
 
-  if (!query.exec()) {
+  if (!query.exec())
+  {
     db.rollback();
-    QMessageBox::critical(this, "Erreur BD",
-                          "Imposssible d'enregistrer la consultation : " +
-                              query.lastError().text());
+    QMessageBox::critical(this, "Erreur BD", "Imposssible d'enregistrer la consultation : " + query.lastError().text());
     return;
   }
 
@@ -201,7 +205,8 @@ void consultationForm::saveConsultation() {
       "insert into Prescrit (medicament_code, consultation_num, nombre_jours) "
       "values (:code_medoc, :consult_num, :nb_jours)");
 
-  for (int i = 0; i < prescriptionTable->rowCount(); ++i) {
+  for (int i = 0; i < prescriptionTable->rowCount(); ++i)
+  {
     QString codeMedoc = prescriptionTable->item(i, 0)->text();
     int nbJours = prescriptionTable->item(i, 2)->text().toInt();
 
@@ -209,11 +214,10 @@ void consultationForm::saveConsultation() {
     prescQuery.bindValue(":consult_num", numeroConsultation);
     prescQuery.bindValue(":nb_jours", nbJours);
 
-    if (!prescQuery.exec()) {
+    if (!prescQuery.exec())
+    {
       db.rollback();
-      QMessageBox::critical(this, "Erreur BD",
-                            "Erreur lors de la sauvegarde de l'ordonnance : " +
-                                prescQuery.lastError().text());
+      QMessageBox::critical(this, "Erreur BD", "Erreur lors de la sauvegarde de l'ordonnance : " + prescQuery.lastError().text());
       return;
     }
   }
