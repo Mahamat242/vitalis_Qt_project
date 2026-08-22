@@ -3,7 +3,7 @@
 login::login(QWidget *parent) : QDialog(parent)
 {
     setWindowTitle("Vitalis - login");
-    setFixedSize(320, 220);
+    //setFixedSize(320, 220);
 
     // création des composants du formulmaire d'authentification
     QLabel *title = new QLabel("<h2>Vitalis</h2><p>Veuillez vous identifier</p>");
